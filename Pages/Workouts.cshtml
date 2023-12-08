@@ -1,0 +1,62 @@
+@page
+@model FinalProject.Pages.WorkoutModel
+
+@{
+    ViewData["Title"] = "Workouts";
+}
+
+<h1>Workouts</h1>
+
+<form method="get">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search by workout name" name="SearchString" value="@Model.CurrentFilter" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Workout Name</th>
+            <th>Difficulty</th>
+            <th>Muscle Groups</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var workout in Model.Workouts)
+{
+    <tr>
+        <td>@Html.DisplayFor(modelworkout => workout.Name)</td>
+        <td>
+            <ul>
+                @foreach (var difficulty in workout.Difficulty)
+                {
+                    <li>@Html.DisplayFor(modeldifficulty => difficulty.Diff_Name)</li>
+                }
+            </ul>
+        </td>
+        <td>
+            <ul>
+                @foreach (var muscleGroup in workout.MuscleGroups)
+                {
+                    <li>@Html.DisplayFor(modelmuscleGroup => muscleGroup.Muscle)</li>
+                }
+            </ul>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                <a class="page-link" asp-page="./Workout" asp-route-pageIndex="@(Model.PageIndex - 1)">Previous</a>
+            </li>
+            <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-page="./Workout" asp-route-pageIndex="@(Model.PageIndex + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

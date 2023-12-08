@@ -1,0 +1,129 @@
+@page
+@model FinalProject.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="User.UserID" />
+            <div class="form-group">
+                <label asp-for="Full_Name" class="control-label"></label>
+                <input asp-for="Full_Name" class="form-control" />
+                <span asp-validation-for="Full_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birth_Date" class="control-label"></label>
+                <input asp-for="Birth_Date" class="form-control" />
+                <span asp-validation-for="Birth_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HeightFT" class="control-label"></label>
+                <input asp-for="HeightFT" class="form-control" />
+                <span asp-validation-for="HeightFT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BodyWeightLbs" class="control-label"></label>
+                <input asp-for="BodyWeightLbs" class="form-control" />
+                <span asp-validation-for="BodyWeightLbs" class="text-danger"></span>
+            </div>
+            
+            <!-- Goals section -->
+            <h4>Goals</h4>
+            <div id="goals-container">
+                <div class="form-group goal">
+                    <label>Goal Name</label>
+                    <input class="form-control" asp-for="User.Goals[0].GoalName" />
+                    <span asp-validation-for="User.Goals[0].GoalName" class="text-danger"></span>
+                </div>
+                <div class="form-group goal">
+                    <label>Weight (Lbs)</label>
+                    <input class="form-control" asp-for="User.Goals[0].WeightLbs" />
+                    <span asp-validation-for="User.Goals[0].WeightLbs" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-goal">Add Goal</button>
+
+            <!-- Maxes section -->
+            <h4>Maxes</h4>
+            <div id="goals-container">
+                <div class="form-group goal">
+                    <label>Max Name</label>
+                    <input class="form-control" asp-for="User.Maxes[0].MaxName" />
+                    <span asp-validation-for="User.Maxes[0].MaxName" class="text-danger"></span>
+                </div>
+                <div class="form-group goal">
+                    <label>Weight (Lbs)</label>
+                    <input class="form-control" asp-for="User.Maxes[0].WeightLbs" />
+                    <span asp-validation-for="User.Maxes[0].WeightLbs" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-max">Add Max</button>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+            let goalCount = 1;
+
+            $("#add-goal").click(function() {
+                let newGoal = `
+                    <div class="form-group goal">
+                        <label>Goal Name</label>
+                        <input class="form-control" asp-for="User.Goals[${goalCount}].GoalName" />
+                        <span asp-validation-for="User.Goals[${goalCount}].GoalName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group goal">
+                        <label>Weight (Lbs)</label>
+                        <input class="form-control" asp-for="User.Goals[${goalCount}].WeightLbs" />
+                        <span asp-validation-for="User.Goals[${goalCount}].WeightLbs" class="text-danger"></span>
+                    </div>
+                `;
+                $("#goals-container").append(newGoal);
+                goalCount++;
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let maxCount = 1;
+
+            $("#add-goal").click(function() {
+                let newMax = `
+                    <div class="form-group goal">
+                        <label>Max Name</label>
+                        <input class="form-control" asp-for="User.Maxes[${maxCount}].MaxName" />
+                        <span asp-validation-for="User.Maxes[${maxCount}].MaxName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group goal">
+                        <label>Weight (Lbs)</label>
+                        <input class="form-control" asp-for="User.Maxes[${maxCount}].WeightLbs" />
+                        <span asp-validation-for="User.Maxes[${maxCount}].WeightLbs" class="text-danger"></span>
+                    </div>
+                `;
+                $("#goals-container").append(newMax);
+                maxCount++;
+            });
+        });
+    </script>
+}
